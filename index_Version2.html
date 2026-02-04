@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>FaithThreads — Religious Shirts & Apparel</title>
+  <meta name="description" content="FaithThreads — stylish, high-quality religious shirts that celebrate faith. Shop Christian, inspirational and faith-based apparel." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#" aria-label="FaithThreads home">
+        <strong>FaithThreads</strong>
+        <span class="tagline">Wear your faith with style</span>
+      </a>
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="#shop">Shop</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <a class="btn btn-primary" href="#shop">Shop Now</a>
+        <button id="cart-toggle" class="cart-btn" aria-label="Open cart" aria-expanded="false">
+          Cart <span id="cart-count" class="cart-count" aria-hidden="true">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Shop hero">
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <h1>Faith-forward apparel for everyday life</h1>
+          <p>High-quality tees and hoodies with inspirational designs. Ethically produced, soft fabrics, and statements that matter.</p>
+          <a class="btn btn-cta" href="#shop">Browse Bestsellers</a>
+        </div>
+        <div class="hero-image" aria-hidden="true">
+          <img src="https://images.unsplash.com/photo-1548316668-9f0083a7b9a9?auto=format&fit=crop&w=1000&q=60"
+               alt="Group of people wearing graphic faith t-shirts" />
+        </div>
+      </div>
+    </section>
+
+    <section id="shop" class="products container" aria-labelledby="shop-heading">
+      <h2 id="shop-heading">Featured Shirts</h2>
+      <p class="lead">Best-selling designs — comfortable fit, premium print.</p>
+
+      <!-- Product grid will be populated from products.json -->
+      <div id="product-grid" class="product-grid" role="list" aria-live="polite"></div>
+    </section>
+
+    <section id="about" class="about container" aria-labelledby="about-heading">
+      <h2 id="about-heading">About FaithThreads</h2>
+      <p>We design apparel that lets people express faith, hope, and love. Our products are ethically made and printed with care. A portion of every sale supports community outreach programs.</p>
+    </section>
+
+    <section id="contact" class="contact container" aria-labelledby="contact-heading">
+      <h2 id="contact-heading">Contact</h2>
+      <p>If you have questions about sizes, wholesale, or partnership opportunities, drop us a note.</p>
+      <form class="contact-form" action="#" method="post" aria-label="Contact form">
+        <label>
+          Your name
+          <input type="text" name="name" required placeholder="Jane Doe">
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" required placeholder="you@example.com">
+        </label>
+        <label>
+          Message
+          <textarea name="message" rows="4" required placeholder="How can we help?"></textarea>
+        </label>
+        <button class="btn btn-primary" type="submit">Send Message</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <strong>FaithThreads</strong>
+        <small>© <span id="year"></span> All rights reserved</small>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <ul>
+          <li><a href="#shop">Shop</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="socials" aria-hidden="true">
+        <a href="#" class="social">Instagram</a>
+        <a href="#" class="social">Facebook</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart modal / drawer -->
+  <div id="cart-modal" class="cart-modal" aria-hidden="true" aria-labelledby="cart-heading" role="dialog">
+    <div class="cart-overlay" data-close-cart></div>
+    <div class="cart-panel" role="document">
+      <header class="cart-header">
+        <h3 id="cart-heading">Your Cart</h3>
+        <button id="cart-close" class="btn btn-outline" aria-label="Close cart">Close</button>
+      </header>
+
+      <div id="cart-items" class="cart-items" aria-live="polite">
+        <!-- Items injected here -->
+      </div>
+
+      <div class="cart-summary">
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span id="cart-subtotal">$0.00</span>
+        </div>
+
+        <form id="checkout-form" class="checkout-form" onsubmit="return false;" aria-label="Checkout form">
+          <label>
+            Full name
+            <input id="checkout-name" type="text" required placeholder="Jane Doe" />
+          </label>
+          <label>
+            Email
+            <input id="checkout-email" type="email" required placeholder="you@example.com" />
+          </label>
+          <label>
+            Shipping address (optional)
+            <input id="checkout-address" type="text" placeholder="123 Main St, City, Country" />
+          </label>
+          <label>
+            Additional notes (optional)
+            <textarea id="checkout-notes" rows="3" placeholder="Gift message, color preference, etc."></textarea>
+          </label>
+
+          <div class="checkout-actions">
+            <button id="checkout-email-btn" class="btn btn-primary" type="button">Checkout via Email</button>
+            <button id="clear-cart" class="btn btn-outline" type="button">Clear Cart</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- small helpers & initial state ---
+    const PRODUCTS_URL = './products.json'; // must be in same directory
+    const STORE_EMAIL = 'orders@faiththreads.example'; // change to real store email
+    const cartKey = 'faiththreads_cart_v1';
+
+    let products = [];
+    let cart = loadCart();
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+    updateCartCount();
+
+    // --- fetch products and render ---
+    fetch(PRODUCTS_URL)
+      .then(res => {
+        if (!res.ok) throw new Error('Failed to load products.json');
+        return res.json();
+      })
+      .then(data => {
+        products = Array.isArray(data) ? data : data.products || [];
+        renderProducts(products);
+      })
+      .catch(err => {
+        const grid = document.getElementById('product-grid');
+        grid.innerHTML = '<p class="error">Unable to load products at this time.</p>';
+        console.error(err);
+      });
+
+    function renderProducts(list) {
+      const grid = document.getElementById('product-grid');
+      grid.innerHTML = '';
+      list.forEach(p => {
+        const article = document.createElement('article');
+        article.className = 'product-card';
+        article.setAttribute('role','listitem');
+        article.innerHTML = `
+          <img class="product-image" src="${escapeHtml(p.image)}" alt="${escapeHtml(p.title)}" />
+          <div class="product-meta">
+            <h3 class="product-title">${escapeHtml(p.title)}</h3>
+            <p class="product-desc">${escapeHtml(p.description)}</p>
+            <div class="product-footer">
+              <span class="price">${formatPrice(p.price)}</span>
+              <div class="product-actions">
+                <button class="btn btn-outline view-btn" data-id="${p.id}" aria-label="View ${escapeHtml(p.title)}">View</button>
+                <button class="btn btn-primary add-btn" data-id="${p.id}" aria-label="Add ${escapeHtml(p.title)} to cart">Add to cart</button>
+              </div>
+            </div>
+          </div>
+        `;
+        grid.appendChild(article);
+      });
+
+      // wire up add-to-cart buttons
+      grid.querySelectorAll('.add-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const id = btn.getAttribute('data-id');
+          addToCart(id, 1);
+        });
+      });
+
+      // view buttons could be wired to open a simple quick view; omitted for brevity
+    }
+
+    // --- cart logic ---
+    function loadCart() {
+      try {
+        const raw = localStorage.getItem(cartKey);
+        return raw ? JSON.parse(raw) : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveCart() {
+      localStorage.setItem(cartKey, JSON.stringify(cart));
+    }
+
+    function updateCartCount() {
+      const count = cart.reduce((s, it) => s + it.quantity, 0);
+      document.getElementById('cart-count').textContent = count;
+    }
+
+    function addToCart(productId, qty = 1) {
+      const prod = products.find(p => String(p.id) === String(productId));
+      if (!prod) return alert('Product not found');
+      const existing = cart.find(i => String(i.id) === String(productId));
+      if (existing) existing.quantity += qty;
+      else cart.push({ id: prod.id, title: prod.title, price: prod.price, quantity: qty });
+      saveCart();
+      updateCartCount();
+      // show cart to confirm
+      openCart();
+      renderCartItems();
+    }
+
+    function setQuantity(productId, qty) {
+      const item = cart.find(i => String(i.id) === String(productId));
+      if (!item) return;
+      item.quantity = Math.max(0, qty);
+      cart = cart.filter(i => i.quantity > 0);
+      saveCart();
+      updateCartCount();
+      renderCartItems();
+    }
+
+    function removeItem(productId) {
+      cart = cart.filter(i => String(i.id) !== String(productId));
+      saveCart();
+      updateCartCount();
+      renderCartItems();
+    }
+
+    function clearCart() {
+      cart = [];
+      saveCart();
+      updateCartCount();
+      renderCartItems();
+    }
+
+    function renderCartItems() {
+      const container = document.getElementById('cart-items');
+      container.innerHTML = '';
+      if (cart.length === 0) {
+        container.innerHTML = '<p class="cart-empty">Your cart is empty.</p>';
+        document.getElementById('cart-subtotal').textContent = formatPrice(0);
+        return;
+      }
+
+      cart.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'cart-item';
+        row.innerHTML = `
+          <div class="item-meta">
+            <div class="item-title">${escapeHtml(item.title)}</div>
+            <div class="item-price">${formatPrice(item.price)}</div>
+          </div>
+          <div class="item-controls">
+            <label class="qty-label">Qty
+              <input type="number" class="qty-input" min="0" value="${item.quantity}" data-id="${escapeHtml(item.id)}" />
+            </label>
+            <button class="btn btn-outline remove-btn" data-id="${escapeHtml(item.id)}" aria-label="Remove ${escapeHtml(item.title)}">Remove</button>
+          </div>
+        `;
+        container.appendChild(row);
+      });
+
+      // wire controls
+      container.querySelectorAll('.qty-input').forEach(inp => {
+        inp.addEventListener('change', e => {
+          const id = inp.getAttribute('data-id');
+          const val = parseInt(inp.value, 10) || 0;
+          setQuantity(id, val);
+        });
+      });
+      container.querySelectorAll('.remove-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const id = btn.getAttribute('data-id');
+          removeItem(id);
+        });
+      });
+
+      // subtotal
+      const subtotal = cart.reduce((s, it) => s + (Number(it.price) * it.quantity), 0);
+      document.getElementById('cart-subtotal').textContent = formatPrice(subtotal);
+    }
+
+    // --- cart modal open/close ---
+    const cartToggle = document.getElementById('cart-toggle');
+    const cartModal = document.getElementById('cart-modal');
+    const cartClose = document.getElementById('cart-close');
+    const cartOverlay = document.querySelector('.cart-overlay');
+    const clearCartBtn = document.getElementById('clear-cart');
+
+    cartToggle.addEventListener('click', () => {
+      const expanded = cartToggle.getAttribute('aria-expanded') === 'true';
+      if (expanded) closeCart();
+      else openCart();
+    });
+
+    cartClose.addEventListener('click', closeCart);
+    cartOverlay.addEventListener('click', closeCart);
+    clearCartBtn.addEventListener('click', () => {
+      if (confirm('Clear cart?')) clearCart();
+    });
+
+    function openCart() {
+      cartModal.setAttribute('aria-hidden', 'false');
+      cartToggle.setAttribute('aria-expanded', 'true');
+      cartModal.classList.add('open');
+      renderCartItems();
+      // focus the first field in checkout
+      setTimeout(() => {
+        document.getElementById('checkout-name').focus();
+      }, 150);
+    }
+
+    function closeCart() {
+      cartModal.setAttribute('aria-hidden', 'true');
+      cartToggle.setAttribute('aria-expanded', 'false');
+      cartModal.classList.remove('open');
+    }
+
+    // --- checkout via email ---
+    document.getElementById('checkout-email-btn').addEventListener('click', () => {
+      if (cart.length === 0) {
+        alert('Your cart is empty.');
+        return;
+      }
+      const name = document.getElementById('checkout-name').value.trim();
+      const email = document.getElementById('checkout-email').value.trim();
+      const address = document.getElementById('checkout-address').value.trim();
+      const notes = document.getElementById('checkout-notes').value.trim();
+
+      if (!name || !email) {
+        alert('Please provide your name and email to proceed with email checkout.');
+        return;
+      }
+
+      // build order details
+      const lines = [];
+      lines.push(`Customer: ${name}`);
+      lines.push(`Email: ${email}`);
+      if (address) lines.push(`Address: ${address}`);
+      if (notes) lines.push(`Notes: ${notes}`);
+      lines.push('');
+      lines.push('Order:');
+      let total = 0;
+      cart.forEach(item => {
+        const line = `- ${item.title} × ${item.quantity} @ ${formatPrice(item.price)} = ${formatPrice(item.price * item.quantity)}`;
+        lines.push(line);
+        total += Number(item.price) * item.quantity;
+      });
+      lines.push('');
+      lines.push(`Subtotal: ${formatPrice(total)}`);
+      lines.push('');
+      lines.push('Please reply to this email with payment method and shipping confirmation.');
+      const body = lines.join('\n');
+
+      const subject = `FaithThreads order from ${name}`;
+      // construct mailto. Note: mailto length may be limited by clients.
+      const mailto = `mailto:${encodeURIComponent(STORE_EMAIL)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+      // open user's email client
+      window.location.href = mailto;
+
+      // optionally keep cart, or clear after sending. We'll clear to avoid duplicate orders.
+      setTimeout(() => {
+        clearCart();
+        closeCart();
+        alert('Your email client should open to send the order. If it did not, copy the order details and email us at ' + STORE_EMAIL);
+      }, 500);
+    });
+
+    // --- utilities ---
+    function formatPrice(n) {
+      const num = Number(n) || 0;
+      return num.toLocaleString(undefined, { style: 'currency', currency: 'USD', minimumFractionDigits: 2 });
+    }
+
+    function escapeHtml(str) {
+      if (str === undefined || str === null) return '';
+      return String(str)
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    // render initial cart on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      updateCartCount();
+      renderCartItems();
+    });
+  </script>
+</body>
+</html>
