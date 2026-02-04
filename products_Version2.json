@@ -1,0 +1,56 @@
+[
+  {
+    "id": "cross-comfort-tee",
+    "title": "Cross Comfort Tee",
+    "description": "Classic unisex tee with a subtle cross print — soft combed cotton.",
+    "price": 24.00,
+    "image": "https://images.unsplash.com/photo-1533190151413-d2d6f9d7a1f5?auto=format&fit=crop&w=800&q=60",
+    "tags": ["classic", "cross", "unisex"],
+    "sizes": ["S","M","L","XL"]
+  },
+  {
+    "id": "scripture-quote-tee",
+    "title": "Scripture Quote Tee",
+    "description": "A favorite verse printed with clean typography — pairs well with denim.",
+    "price": 26.00,
+    "image": "https://images.unsplash.com/photo-1506619216599-9d16b4c30b61?auto=format&fit=crop&w=800&q=60",
+    "tags": ["verse", "typography"],
+    "sizes": ["S","M","L","XL"]
+  },
+  {
+    "id": "faith-hoodie",
+    "title": "Faith Hoodie",
+    "description": "Cozy midweight hoodie with embroidered detail — available in multiple colors.",
+    "price": 48.00,
+    "image": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=60",
+    "tags": ["hoodie", "embroidered"],
+    "sizes": ["S","M","L","XL"]
+  },
+  {
+    "id": "eco-faith-tee",
+    "title": "Eco Faith Tee",
+    "description": "Made from organic cotton and recycled packaging — sustainable and soft.",
+    "price": 28.00,
+    "image": "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=800&q=60",
+    "tags": ["eco", "sustainable"],
+    "sizes": ["S","M","L","XL"]
+  },
+  {
+    "id": "peace-dove-tee",
+    "title": "Peace Dove Tee",
+    "description": "Minimalist dove graphic — a gentle reminder of peace and hope.",
+    "price": 24.00,
+    "image": "https://images.unsplash.com/photo-1519677100203-a0e668c92439?auto=format&fit=crop&w=800&q=60",
+    "tags": ["dove", "minimal"],
+    "sizes": ["S","M","L","XL"]
+  },
+  {
+    "id": "verse-sleeve-long-sleeve",
+    "title": "Verse Sleeve Long-Sleeve",
+    "description": "Subtle sleeve print with a favorite passage — perfect for layering.",
+    "price": 32.00,
+    "image": "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=800&q=60",
+    "tags": ["long-sleeve", "verse"],
+    "sizes": ["S","M","L","XL"]
+  }
+]
